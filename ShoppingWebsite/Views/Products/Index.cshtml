@@ -1,0 +1,95 @@
+﻿@model IEnumerable<ShoppingWebsite.Models.Product>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>All Products</h1>
+@if (User.IsInRole("Admin"))
+{
+    <p>
+    <a asp-action="Create">Create New</a>
+</p>
+}
+
+@*<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImagePath)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImagePath)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>*@
+
+<div class="row">
+    @foreach (var product in Model)
+    {
+        <div class="col-4">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">
+                        <label style="color: steelblue">@product.Title</label>
+                    </h4>
+                </div>
+                <img src="~/Images/@product.ImagePath" alt="Card Image" class="card-img-top" style="height: 200px;"/>
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            <label style="color: #a51313"><b>Price : @product.Price</b></label>
+                        </div>
+                        <a asp-action="Details" asp-route-id="@product.Id" class="btn btn-success pull-right btn-outline-info">Deatils</a>
+                        <a asp-action="Add" asp-controller="ShoppingCarts" asp-route-id="@product.Id" class="btn btn-success pull-right btn-outline-info">Add to cart</a>
+                    </div>
+                </div>
+                @if (User.IsInRole("Admin"))
+                {
+                     <div>
+                           <a asp-action="Edit" asp-route-id="@product.Id">Edit</a> |
+                           <a asp-action="Details" asp-route-id="@product.Id">Details</a> |
+                           <a asp-action="Delete" asp-route-id="@product.Id">Delete</a>
+                    </div>  
+
+                }
+
+            </div>
+        </div>
+    }
+</div>
+
+
+
+
